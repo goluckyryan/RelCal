@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Rel. Cal.</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_mass">Mass</string>
+    <string name="action_transfer">Transfer</string>
+    <string name="ke_label">K.E. [A.MeV]</string>
+    <string name="gamma_label">gamma</string>
+    <string name="beta_label">beta</string>
+    <string name="length_label">length [mm]</string>
+    <string name="tof_label">ToF [ns]</string>
+    <string name="Brho_label">Brho [T.m]</string>
+    <string name="mass_label">mass [MeV c<sup><small>-2</small></sup>]</string>
+    <string name="Z_label">Z</string>
+    <string name="A_label">A</string>
+    <string name="BEA_label">BE/A [keV]</string>
+    <string name="Sp_label">Sp [MeV]</string>
+    <string name="Sn_label">Sn [MeV]</string>
+    <string name="momt_label">momt [MeV c<sup><small>-1</small></sup>]</string>
+    <string name="TLab_label">T<sub><small>Lab</small></sub> [A.MeV]</string>
+    <string name="thetaCM_label">\u03B8<sub><small>CM</small></sub></string>
+    <string name="beam_label">P<sub><small>beam</small></sub></string>
+    <string name="target_label">P<sub><small>target</small></sub></string>
+    <string name="p1_label">P<sub><small>1</small></sub></string>
+    <string name="p2_label">P<sub><small>2</small></sub></string>
+    <string name="Ex_label">E<sub><small>x</small></sub></string>
+</resources>
