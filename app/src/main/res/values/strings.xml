@@ -23,4 +23,6 @@
     <string name="p1_label">P<sub><small>1</small></sub></string>
     <string name="p2_label">P<sub><small>2</small></sub></string>
     <string name="Ex_label">E<sub><small>x</small></sub></string>
+    <string name="plot_Yaxis">E<sub><small>Lab</small></sub> [MeV]</string>
+    <string name="plot_Xaxis">\u03B8<sub><small>Lab</small></sub> [deg]</string>
 </resources>

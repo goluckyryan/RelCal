@@ -5,18 +5,36 @@ import android.graphics.Color;
 import android.opengl.GLSurfaceView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.androidplot.ui.HorizontalPositioning;
+import com.androidplot.ui.LayoutManager;
+import com.androidplot.ui.VerticalPositioning;
+import com.androidplot.util.Layerable;
+import com.androidplot.xy.BoundaryMode;
 import com.androidplot.xy.LineAndPointFormatter;
 import com.androidplot.xy.SimpleXYSeries;
 import com.androidplot.xy.XYPlot;
 import com.androidplot.xy.XYSeries;
 
+import java.awt.font.NumericShaper;
+import java.lang.reflect.Array;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
+import static java.lang.Integer.min;
+import static java.lang.Integer.numberOfLeadingZeros;
 import static java.lang.Integer.parseInt;
+import static java.lang.Math.abs;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 import static java.lang.Math.sqrt;
@@ -81,9 +99,11 @@ public class TransferActivity extends AppCompatActivity {
 
         plot = findViewById(R.id.plot);
 
-        XYSeries s1 = new SimpleXYSeries(SimpleXYSeries.ArrayFormat.Y_VALS_ONLY,"series1", 1,5,2,8,3,9);
-
-        plot.addSeries(s1, new LineAndPointFormatter(Color.GREEN, Color.BLUE, null, null));
+        plot.clear();
+        plot.getLegend().position(100, HorizontalPositioning.ABSOLUTE_FROM_CENTER,
+                0, VerticalPositioning.ABSOLUTE_FROM_TOP);
+        plot.getDomainTitle().position(0, HorizontalPositioning.ABSOLUTE_FROM_CENTER,
+                100, VerticalPositioning.ABSOLUTE_FROM_BOTTOM);
 
         PaName.setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -169,6 +189,82 @@ public class TransferActivity extends AppCompatActivity {
                     Pb[2] = 0;
                     Pbvec.setText(displays4vec(Pb));
 
+                    //Plot graphic of Elab vs theta
+
+                    //Calculate data
+                    List<Double> xvals1 = new ArrayList<>();
+                    List<Double> yvals1 = new ArrayList<>();
+
+                    List<Double> xvals2 = new ArrayList<>();
+                    List<Double> yvals2 = new ArrayList<>();
+
+                    double maxX = 0 , maxY = 0, minX = 0;
+
+                    for( int j = 0 ; j < 360; j++){
+                        TransferReaction(j);
+
+                        xvals1.add(GetKE(P1));
+                        yvals1.add(GetThetaLab(P1));
+
+                        xvals2.add(GetKE(P2));
+                        yvals2.add(GetThetaLab(P2));
+
+                        if(abs(yvals1.get(j)) > maxY){
+                            maxY = abs(yvals1.get(j));
+                        }
+
+                        if(abs(yvals2.get(j)) > maxY){
+                            maxY = abs(yvals2.get(j));
+                        }
+
+                        if(xvals1.get(j) > maxX){
+                            maxX = xvals1.get(j);
+                        }
+                        if(xvals2.get(j) > maxX){
+                            maxX = xvals2.get(j);
+                        }
+
+                        if(xvals1.get(j) < minX){
+                            minX = xvals1.get(j);
+                        }
+                        if(xvals2.get(j) < minX){
+                            minX = xvals2.get(j);
+                        }
+                        //Log.i("Read","i " + Integer.toString(j) + " , (x, y) = (" + xvals1.get(j)+", " + yvals1.get(j));
+                    }
+
+                    if( maxY > 90){
+                        maxY = 180;
+                    }else if( maxY >30){
+                        maxY = 60;
+                    }else{
+                        maxY = 30;
+                    }
+
+
+                    maxX = Math.ceil( maxX * 1.1 );
+                    if( minX < 0) {
+                        minX = Math.floor(minX * 1.1);
+                    }else{
+                        minX = Math.floor(minX * 0.9);
+                    }
+
+                    XYSeries s1 = new SimpleXYSeries(xvals1, yvals1, "P1");
+                    XYSeries s2 = new SimpleXYSeries(xvals2, yvals2, "P2");
+
+                    LineAndPointFormatter s1Format = new LineAndPointFormatter(Color.BLUE, null, null, null);
+                    LineAndPointFormatter s2Format = new LineAndPointFormatter(Color.RED, null, null, null);
+
+                    plot.clear();
+                    plot.addSeries(s1, s1Format);
+                    plot.addSeries(s2, s2Format);
+
+                    //Find y range
+                    plot.setDomainBoundaries(minX, maxX, BoundaryMode.FIXED);
+                    plot.setRangeBoundaries(-maxY, maxY, BoundaryMode.FIXED);
+                    plot.redraw();
+
+
                     return true;
                 }
                 return false;
@@ -181,7 +277,7 @@ public class TransferActivity extends AppCompatActivity {
                 thetaCM = i;
                 theta_reading_display.setText("" + i);
 
-                TransferReaction();
+                TransferReaction( i );
 
                 P1vec.setText(displays4vec(P1));
                 P2vec.setText(displays4vec(P2));
@@ -215,7 +311,7 @@ public class TransferActivity extends AppCompatActivity {
         return ans;
     }
 
-    private void TransferReaction(){
+    private void TransferReaction(double thetaCM){
         double[] Pcm = new double[3];
         Pcm[0] = (Pa[0]+Pb[0])/2;
         Pcm[1] = (Pa[1]+Pb[1])/2;
@@ -257,6 +353,24 @@ public class TransferActivity extends AppCompatActivity {
         P2[1] = gamma * beta * P2c[0] + gamma * P2c[1];
         P2[2] = P2c[2];
 
+    }
+
+    private double GetKE(double[] vec){
+        if( vec.length != 3){
+            return 0.0;
+        }
+
+        double mass = sqrt(vec[0] * vec[0] - vec[1] * vec[1] - vec[2]*vec[2]);
+
+        return vec[0] - mass;
+    }
+
+    private double GetThetaLab(double[] vec){
+        if( vec.length != 3){
+            return 0.0;
+        }
+
+        return  Math.atan2(vec[2], vec[1])*180./Math.PI;
     }
 
 }
