@@ -1,13 +1,16 @@
 package com.user.relcal;
 
+import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Color;
+import android.hardware.input.InputManager;
 import android.opengl.GLSurfaceView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -62,6 +65,8 @@ public class TransferActivity extends AppCompatActivity {
     TextView P1vec;
     TextView P2vec;
 
+    TextView QValueView;
+
     EditText TLabInput;
     SeekBar thetaCM_seekBar;
     TextView theta_reading_display;
@@ -80,7 +85,10 @@ public class TransferActivity extends AppCompatActivity {
         ma = new Nucleus(12, 6, assetManager);
         mb = new Nucleus(2, 1 ,assetManager);
         m1 = new Nucleus(1, 1, assetManager );
-        m2 = new Nucleus( ma.A + ma.A - mb.A, ma.Z + ma.Z - mb.Z, assetManager );
+        m2 = new Nucleus( ma.A + mb.A - m1.A, ma.Z + mb.Z - m1.Z, assetManager );
+
+        QValueView = findViewById(R.id.textView_QValue);
+        QValueView.setText(String.format("Q : %5.2f [MeV]",ma.mass + mb.mass - m1.mass - m2.mass));
 
         PaName = findViewById(R.id.editText_Pa);
         PbName = findViewById(R.id.editText_Pb);
@@ -105,6 +113,24 @@ public class TransferActivity extends AppCompatActivity {
         plot.getDomainTitle().position(0, HorizontalPositioning.ABSOLUTE_FROM_CENTER,
                 100, VerticalPositioning.ABSOLUTE_FROM_BOTTOM);
 
+        PaName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if( !b){
+                    String nameA = PaName.getText().toString();
+                    ma = new Nucleus(nameA, assetManager);
+                    Pavec.setText("" + ma.mass);
+
+                    m2 = new Nucleus( mb.A + ma.A - m1.A, mb.Z + ma.Z - m1.Z, assetManager );
+                    P2Name.setText(m2.Name);
+                    P2vec.setText(""+m2.mass);
+
+                    QValueView.setText(String.format("Q : %5.2f [MeV]",ma.mass + mb.mass - m1.mass - m2.mass));
+
+                }
+            }
+        });
+
         PaName.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
@@ -114,13 +140,33 @@ public class TransferActivity extends AppCompatActivity {
                     ma = new Nucleus(nameA, assetManager);
                     Pavec.setText("" + ma.mass);
 
-                    m2 = new Nucleus( mb.A + ma.A - m1.A, mb.Z + ma.Z - mb.Z, assetManager );
+                    m2 = new Nucleus( mb.A + ma.A - m1.A, mb.Z + ma.Z - m1.Z, assetManager );
                     P2Name.setText(m2.Name);
                     P2vec.setText(""+m2.mass);
+
+                    QValueView.setText(String.format("Q : %5.2f [MeV]",ma.mass + mb.mass - m1.mass - m2.mass));
 
                     return true;
                 }
                 return false;
+            }
+        });
+
+        PbName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if( !b){
+                    String nameA = PbName.getText().toString();
+                    mb = new Nucleus(nameA, assetManager);
+                    Pbvec.setText("" + mb.mass);
+
+                    m2 = new Nucleus( mb.A + ma.A - m1.A, mb.Z + ma.Z - m1.Z, assetManager );
+                    P2Name.setText(m2.Name);
+                    P2vec.setText(""+m2.mass);
+
+                    QValueView.setText(String.format("Q : %5.2f [MeV]",ma.mass + mb.mass - m1.mass - m2.mass));
+
+                }
             }
         });
 
@@ -133,13 +179,33 @@ public class TransferActivity extends AppCompatActivity {
                     mb = new Nucleus(nameA, assetManager);
                     Pbvec.setText("" + mb.mass);
 
-                    m2 = new Nucleus( mb.A + ma.A - m1.A, mb.Z + ma.Z - mb.Z, assetManager );
+                    m2 = new Nucleus( mb.A + ma.A - m1.A, mb.Z + ma.Z - m1.Z, assetManager );
                     P2Name.setText(m2.Name);
                     P2vec.setText(""+m2.mass);
+
+                    QValueView.setText(String.format("Q : %5.2f [MeV]",ma.mass + mb.mass - m1.mass - m2.mass));
 
                     return true;
                 }
                 return false;
+            }
+        });
+
+        P1Name.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if( !b){
+                    String nameA = P1Name.getText().toString();
+                    m1 = new Nucleus(nameA, assetManager);
+                    P1vec.setText("" + m1.mass);
+
+                    m2 = new Nucleus( mb.A + ma.A - m1.A, mb.Z + ma.Z - m1.Z, assetManager );
+                    P2Name.setText(m2.Name);
+                    P2vec.setText(""+m2.mass);
+
+                    QValueView.setText(String.format("Q : %5.2f [MeV]",ma.mass + mb.mass - m1.mass - m2.mass));
+
+                }
             }
         });
 
@@ -152,9 +218,11 @@ public class TransferActivity extends AppCompatActivity {
                     m1 = new Nucleus(nameA, assetManager);
                     P1vec.setText("" + m1.mass);
 
-                    m2 = new Nucleus( mb.A + ma.A - m1.A, mb.Z + ma.Z - mb.Z, assetManager );
+                    m2 = new Nucleus( mb.A + ma.A - m1.A, mb.Z + ma.Z - m1.Z, assetManager );
                     P2Name.setText(m2.Name);
                     P2vec.setText(""+m2.mass);
+
+                    QValueView.setText(String.format("Q : %5.2f [MeV]",ma.mass + mb.mass - m1.mass - m2.mass));
 
                     return true;
                 }
@@ -167,11 +235,16 @@ public class TransferActivity extends AppCompatActivity {
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
                 if( (keyEvent.getAction() == KeyEvent.ACTION_DOWN) && i == KeyEvent.KEYCODE_ENTER){
 
+                    InputMethodManager inputManager = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+
                     ma = new Nucleus(PaName.getText().toString(), assetManager);
                     mb = new Nucleus(PbName.getText().toString(), assetManager);
                     m1 = new Nucleus(P1Name.getText().toString(), assetManager);
-                    m2 = new Nucleus( mb.A + ma.A - m1.A, mb.Z + ma.Z - mb.Z, assetManager );
+                    m2 = new Nucleus( mb.A + ma.A - m1.A, mb.Z + ma.Z - m1.Z, assetManager );
                     P2Name.setText(m2.Name);
+
+                    QValueView.setText(String.format("Q : %5.2f [MeV]",ma.mass + mb.mass - m1.mass - m2.mass));
 
                     TLab = Double.parseDouble(TLabInput.getText().toString());
                     Ex = Double.parseDouble(ExInput.getText().toString());
@@ -303,11 +376,11 @@ public class TransferActivity extends AppCompatActivity {
 
         double angle = Math.atan2(vec[2], vec[1])*180./Math.PI;
         double p = sqrt(vec[1]*vec[1]+vec[2]*vec[2]);
-        //double mass = sqrt(vec[0]*vec[0]- p*p);
-        //double T = vec[0] - mass;
-        double beta = p/vec[0];
+        double mass = sqrt(vec[0]*vec[0]- p*p);
+        double T = vec[0] - mass;
+        //double beta = p/vec[0];
 
-        String ans = String.format("(%8.1f, %8.1f, %8.1f), (%4.3f, %5.1f)", vec[0], vec[1], vec[2], beta, angle);
+        String ans = String.format("(%8.1f, %8.1f, %8.1f), (%4.3f, %5.1f)", vec[0], vec[1], vec[2], T, angle);
         return ans;
     }
 

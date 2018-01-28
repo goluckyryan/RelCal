@@ -6,16 +6,6 @@
     android:layout_height="match_parent"
     tools:context="com.user.relcal.MainActivity">
 
-    <TextView
-        android:id="@+id/textViewLB"
-        android:layout_width="0dp"
-        android:layout_height="34dp"
-        android:text="( "
-        android:textAlignment="center"
-        android:textSize="24sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/editText_Pa"
-        app:layout_constraintStart_toEndOf="@+id/editText_Pa" />
-
     <EditText
         android:id="@+id/editText_Pa"
         android:layout_width="60dp"
@@ -53,6 +43,16 @@
         android:textAlignment="center"
         app:layout_constraintBaseline_toBaselineOf="@+id/editText_Pa"
         app:layout_constraintStart_toEndOf="@+id/textViewComma" />
+
+    <TextView
+        android:id="@+id/textViewLB"
+        android:layout_width="0dp"
+        android:layout_height="34dp"
+        android:text="( "
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/editText_Pa"
+        app:layout_constraintStart_toEndOf="@+id/editText_Pa" />
 
     <TextView
         android:id="@+id/textView_P2"
@@ -251,5 +251,15 @@
         app:layout_constraintTop_toBottomOf="@+id/textView_4vP2"
         app:lineLabels="left|bottom"
         app:rangeTitle="@string/plot_Yaxis" />
+
+    <TextView
+        android:id="@+id/textView_QValue"
+        android:layout_width="114dp"
+        android:layout_height="39dp"
+        android:layout_marginEnd="8dp"
+        android:text="Q : "
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView_P2"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

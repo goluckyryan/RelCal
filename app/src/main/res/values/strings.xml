@@ -17,7 +17,7 @@
     <string name="Sn_label">Sn [MeV]</string>
     <string name="momt_label">momt [MeV c<sup><small>-1</small></sup>]</string>
     <string name="TLab_label">T<sub><small>Lab</small></sub> [A.MeV]</string>
-    <string name="thetaCM_label">\u03B8<sub><small>CM</small></sub></string>
+    <string name="thetaCM_label">\u03B8<sub><small>CM</small></sub> [deg]</string>
     <string name="beam_label">P<sub><small>beam</small></sub></string>
     <string name="target_label">P<sub><small>target</small></sub></string>
     <string name="p1_label">P<sub><small>1</small></sub></string>
