@@ -8,6 +8,13 @@
     tools:context="com.user.relcal.MainActivity"
     tools:showIn="@layout/activity_main">
 
+    <!-- dummy item for focus -->
+    <LinearLayout
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_width="0px"
+        android:layout_height="0px"/>
+
     <!--   ================================================= MASS  -->
     <EditText
         android:id="@+id/Z_text"
@@ -23,7 +30,8 @@
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:nextFocusDown="@+id/A_text"/>
 
     <EditText
         android:id="@+id/Sp_text"
@@ -297,7 +305,8 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.7" />
+        app:layout_constraintHorizontal_bias="0.7"
+        android:nextFocusDown="@+id/Sym_text"/>
 
     <EditText
         android:id="@+id/Sym_text"
@@ -313,9 +322,8 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/Z_view"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/Z_view" />
-
-
+        app:layout_constraintRight_toLeftOf="@+id/Z_view"
+        android:nextFocusDown="@+id/Z_text"/>
 
 
     <TextView

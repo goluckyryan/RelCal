@@ -6,6 +6,12 @@
     android:layout_height="match_parent"
     tools:context="com.user.relcal.MainActivity">
 
+    <LinearLayout
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_width="0px"
+        android:layout_height="0px"/>
+
     <EditText
         android:id="@+id/editText_Pa"
         android:layout_width="60dp"
@@ -18,7 +24,8 @@
         android:text="12C"
         android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:nextFocusDown="@+id/editText_Pb"/>
 
     <EditText
         android:id="@+id/editText_Pb"
@@ -30,7 +37,8 @@
         android:text="2H"
         android:textAlignment="center"
         app:layout_constraintBaseline_toBaselineOf="@+id/editText_Pa"
-        app:layout_constraintStart_toEndOf="@+id/textViewLB" />
+        app:layout_constraintStart_toEndOf="@+id/textViewLB"
+        android:nextFocusDown="@+id/editText_P1"/>
 
     <EditText
         android:id="@+id/editText_P1"
@@ -42,7 +50,8 @@
         android:text="1H"
         android:textAlignment="center"
         app:layout_constraintBaseline_toBaselineOf="@+id/editText_Pa"
-        app:layout_constraintStart_toEndOf="@+id/textViewComma" />
+        app:layout_constraintStart_toEndOf="@+id/textViewComma"
+        android:nextFocusDown="@+id/editText_TLab"/>
 
     <TextView
         android:id="@+id/textViewLB"
@@ -123,7 +132,8 @@
         android:selectAllOnFocus="true"
         android:textAlignment="center"
         app:layout_constraintStart_toEndOf="@+id/textView_TLab"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:nextFocusDown="@+id/editText_Ex"/>
 
     <SeekBar
         android:id="@+id/seekBar"
@@ -230,7 +240,8 @@
         android:text="0"
         android:textAlignment="center"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView_Ex"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:nextFocusDown="@+id/editText_Pa"/>
 
     <com.androidplot.xy.XYPlot
         android:id="@+id/plot"

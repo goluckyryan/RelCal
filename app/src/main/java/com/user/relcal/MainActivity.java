@@ -1,16 +1,19 @@
 package com.user.relcal;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -129,10 +132,68 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        A_dis.setOnKeyListener(new View.OnKeyListener(){
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) && i == KeyEvent.KEYCODE_ENTER) {
+
+                    InputMethodManager inputManager = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+
+                    Z = parseInt(Z_dis.getText().toString());
+                    A = parseInt(A_dis.getText().toString());
+                    Log.i("Read","A = "+Integer.toString(A)+", Z = "+Integer.toString(Z)) ;
+
+                    isotope = new Nucleus(A, Z, assetManager);
+
+                    mass_dis.setText(massExp(isotope.mass, isotope.massError));
+                    Sym_dis.setText(isotope.Name);
+                    BEA_dis.setText(display(isotope.BEA));
+
+                    isotope.CalSp();
+                    Sp_dis.setText(display(isotope.Sp));
+                    Sn_dis.setText(display(isotope.Sn));
+
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        Sym_dis.setOnKeyListener(new View.OnKeyListener(){
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) && i == KeyEvent.KEYCODE_ENTER) {
+
+                    InputMethodManager inputManager = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+
+                    String name = Sym_dis.getText().toString();
+
+                    isotope = new Nucleus(name, assetManager);
+
+                    mass_dis.setText(massExp(isotope.mass, isotope.massError));
+                    Z_dis.setText("" + isotope.Z);
+                    A_dis.setText("" + isotope.A);
+                    Sym_dis.setText(isotope.Name);
+                    BEA_dis.setText(display(isotope.BEA));
+
+                    isotope.CalSp();
+                    Sp_dis.setText(display(isotope.Sp));
+                    Sn_dis.setText(display(isotope.Sn));
+
+                    return true;
+                }
+                return false;
+            }
+        });
+
         mass_Cal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                InputMethodManager inputManager = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 if( editedName == false) {
                     Z = parseInt(Z_dis.getText().toString());
                     A = parseInt(A_dis.getText().toString());
@@ -172,6 +233,8 @@ public class MainActivity extends AppCompatActivity {
         ke_Cal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                InputMethodManager inputManager = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 Z = parseInt(Z_dis.getText().toString());
                 A = parseInt(A_dis.getText().toString());
                 length = Double.parseDouble(length_dis.getText().toString());
@@ -207,6 +270,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                InputMethodManager inputManager = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 Z = parseInt(Z_dis.getText().toString());
                 A = parseInt(A_dis.getText().toString());
                 length = Double.parseDouble(length_dis.getText().toString());
@@ -244,6 +309,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                InputMethodManager inputManager = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 Z = parseInt(Z_dis.getText().toString());
                 A = parseInt(A_dis.getText().toString());
                 length = Double.parseDouble(length_dis.getText().toString());
@@ -279,6 +346,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                InputMethodManager inputManager = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 Z = parseInt(Z_dis.getText().toString());
                 A = parseInt(A_dis.getText().toString());
                 length = Double.parseDouble(length_dis.getText().toString());
@@ -314,6 +383,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                InputMethodManager inputManager = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 Z = parseInt(Z_dis.getText().toString());
                 A = parseInt(A_dis.getText().toString());
                 length = Double.parseDouble(length_dis.getText().toString());
@@ -349,6 +420,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                InputMethodManager inputManager = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 Z = parseInt(Z_dis.getText().toString());
                 A = parseInt(A_dis.getText().toString());
                 length = Double.parseDouble(length_dis.getText().toString());
