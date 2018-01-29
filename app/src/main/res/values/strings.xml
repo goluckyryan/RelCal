@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">Rel. Cal.</string>
-    <string name="action_settings">Settings</string>
-    <string name="action_mass">Mass</string>
     <string name="action_transfer">Transfer</string>
+    <string name="action_momentumMatching">Momt. Matching</string>
+    <string name="action_helios">HELIOS</string>
+    <string name="action_knockout">HELIOS</string>
     <string name="ke_label">K.E. [A.MeV]</string>
     <string name="gamma_label">gamma</string>
     <string name="beta_label">beta</string>
