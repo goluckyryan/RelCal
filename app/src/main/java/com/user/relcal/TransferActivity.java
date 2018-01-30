@@ -22,6 +22,7 @@ import com.androidplot.util.Layerable;
 import com.androidplot.xy.BoundaryMode;
 import com.androidplot.xy.LineAndPointFormatter;
 import com.androidplot.xy.SimpleXYSeries;
+import com.androidplot.xy.StepMode;
 import com.androidplot.xy.XYPlot;
 import com.androidplot.xy.XYSeries;
 
@@ -120,6 +121,8 @@ public class TransferActivity extends AppCompatActivity {
                 0, VerticalPositioning.ABSOLUTE_FROM_TOP);
         plot2.getDomainTitle().position(0, HorizontalPositioning.ABSOLUTE_FROM_CENTER,
                 100, VerticalPositioning.ABSOLUTE_FROM_BOTTOM);
+        plot2.setUserRangeOrigin(0);
+        plot2.setRangeStep(StepMode.INCREMENT_BY_VAL, 1);
 
         PaName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -282,7 +285,7 @@ public class TransferActivity extends AppCompatActivity {
                     List<Double> xvals3 = new ArrayList<>();
                     List<Double> yvals3 = new ArrayList<>();
 
-                    double maxX = 0 , maxY = 0, minX = 0;
+                    double maxX = 0 , maxY = 0, minX = 0, maxY2 = 0, minY2 = 100, maxX2 = 0;
 
                     double r = 1.25 * Math.pow(mb.A, 1./3.);
                     double hbar = 197.327 ;
@@ -305,6 +308,18 @@ public class TransferActivity extends AppCompatActivity {
                         double q = sqrt(Qx * Qx + Qy * Qy);
                         double L = sqrt( Math.pow(q*r/hbar, 2) + 0.25 ) - 0.5;
                         yvals3.add(L);
+
+                        if( L > maxY2){
+                            maxY2 = L;
+                        }
+
+                        if( L < minY2){
+                            minY2 = L;
+                        }
+
+                        if( xvals3.get(j) > maxX2){
+                            maxX2 = xvals3.get(j);
+                        }
 
                         if(abs(yvals1.get(j)) > maxY){
                             maxY = abs(yvals1.get(j));
@@ -338,15 +353,14 @@ public class TransferActivity extends AppCompatActivity {
                         maxY = 30;
                     }
 
-
                     maxX = Math.round(Math.ceil(maxX+5)/10.0) * 10;
                     minX = Math.round(Math.floor(minX-5)/10.0) * 10;
 
-                    //if( minX < 0) {
-                    //    minX = Math.floor(minX * 1.1);
-                    //}else{
-                    //    minX = Math.floor(minX * 0.9);
-                    //}
+                    plot.setDomainStep(StepMode.INCREMENT_BY_VAL, (maxX - minX)/10);
+
+                    maxX2 = Math.round(Math.ceil(maxX2+5)/10.0) * 10;
+
+                    plot2.setDomainStep(StepMode.INCREMENT_BY_VAL, maxX2/10);
 
                     XYSeries s1 = new SimpleXYSeries(xvals1, yvals1, "P1");
                     XYSeries s2 = new SimpleXYSeries(xvals2, yvals2, "P2");
@@ -361,13 +375,18 @@ public class TransferActivity extends AppCompatActivity {
 
                     plot2.clear();
                     plot2.addSeries(s3, s1Format);
-                    plot2.redraw();
 
                     //Find y range
                     plot.setDomainBoundaries(minX, maxX, BoundaryMode.FIXED);
                     plot.setRangeBoundaries(-maxY, maxY, BoundaryMode.FIXED);
                     plot.redraw();
 
+                    plot2.setDomainBoundaries(0, maxX2, BoundaryMode.FIXED);
+                    plot2.setRangeBoundaries(Math.floor(minY2), Math.ceil(maxY2), BoundaryMode.FIXED);
+                    plot2.redraw();
+
+                    P1vec.setText(displays4vec(P1));
+                    P2vec.setText(displays4vec(P2));
 
                     return true;
                 }
