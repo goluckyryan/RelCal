@@ -298,14 +298,13 @@ public class TransferActivity extends AppCompatActivity {
 
                         // momentum transfer
                         xvals3.add(GetThetaLab(P2));
-                        double[] Q = new double[3];
-                        Q[0] = P2[0] - Pa[0];
-                        Q[1] = P2[1] - Pa[1];
-                        Q[2] = P2[2] - Pa[2];
 
-                        double q = GetMomentum(Q);
+                        double Qx = P2[1] - Pa[1];
+                        double Qy = P2[2] - Pa[2];
+
+                        double q = sqrt(Qx * Qx + Qy * Qy);
                         double L = sqrt( Math.pow(q*r/hbar, 2) + 0.25 ) - 0.5;
-                        xvals3.add(L);
+                        yvals3.add(L);
 
                         if(abs(yvals1.get(j)) > maxY){
                             maxY = abs(yvals1.get(j));
@@ -340,8 +339,8 @@ public class TransferActivity extends AppCompatActivity {
                     }
 
 
-                    maxX = Math.round(maxX/10.0) * 10;
-                    minX = Math.round(minX/10.0) * 10;
+                    maxX = Math.round(Math.ceil(maxX+5)/10.0) * 10;
+                    minX = Math.round(Math.floor(minX-5)/10.0) * 10;
 
                     //if( minX < 0) {
                     //    minX = Math.floor(minX * 1.1);
