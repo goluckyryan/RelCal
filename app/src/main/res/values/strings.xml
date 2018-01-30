@@ -3,7 +3,7 @@
     <string name="action_transfer">Transfer</string>
     <string name="action_momentumMatching">Momt. Matching</string>
     <string name="action_helios">HELIOS</string>
-    <string name="action_knockout">HELIOS</string>
+    <string name="action_knockout">Knockout</string>
     <string name="ke_label">K.E. [A.MeV]</string>
     <string name="gamma_label">gamma</string>
     <string name="beta_label">beta</string>
@@ -26,4 +26,8 @@
     <string name="Ex_label">E<sub><small>x</small></sub></string>
     <string name="plot_Xaxis">E<sub><small>Lab</small></sub> [MeV]</string>
     <string name="plot_Yaxis">\u03B8<sub><small>Lab</small></sub> [deg]</string>
+    <string name="plot2_Xaxis">\u03B8<sub><small>Lab</small></sub> [deg]</string>
+    <string name="plot2_Yaxis">L [ħ]</string>
+    <string name="tab1_name">\u03B8<sub><small>Lab</small></sub> vs E<sub><small>Lab</small></sub></string>
+    <string name="tab2_name">L vs \u03B8<sub><small>Lab</small></sub></string>
 </resources>

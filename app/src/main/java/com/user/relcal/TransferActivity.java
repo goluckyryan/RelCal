@@ -73,6 +73,7 @@ public class TransferActivity extends AppCompatActivity {
     EditText ExInput;
 
     private XYPlot plot;
+    private XYPlot plot2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,11 +107,18 @@ public class TransferActivity extends AppCompatActivity {
         ExInput = findViewById(R.id.editText_Ex);
 
         plot = findViewById(R.id.plot);
+        plot2 = findViewById(R.id.plot2);
 
         plot.clear();
         plot.getLegend().position(100, HorizontalPositioning.ABSOLUTE_FROM_CENTER,
                 0, VerticalPositioning.ABSOLUTE_FROM_TOP);
         plot.getDomainTitle().position(0, HorizontalPositioning.ABSOLUTE_FROM_CENTER,
+                100, VerticalPositioning.ABSOLUTE_FROM_BOTTOM);
+
+        plot2.clear();
+        plot2.getLegend().position(100, HorizontalPositioning.ABSOLUTE_FROM_CENTER,
+                0, VerticalPositioning.ABSOLUTE_FROM_TOP);
+        plot2.getDomainTitle().position(0, HorizontalPositioning.ABSOLUTE_FROM_CENTER,
                 100, VerticalPositioning.ABSOLUTE_FROM_BOTTOM);
 
         PaName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -271,7 +279,13 @@ public class TransferActivity extends AppCompatActivity {
                     List<Double> xvals2 = new ArrayList<>();
                     List<Double> yvals2 = new ArrayList<>();
 
+                    List<Double> xvals3 = new ArrayList<>();
+                    List<Double> yvals3 = new ArrayList<>();
+
                     double maxX = 0 , maxY = 0, minX = 0;
+
+                    double r = 1.25 * Math.pow(mb.A, 1./3.);
+                    double hbar = 197.327 ;
 
                     for( int j = 0 ; j < 360; j++){
                         TransferReaction(j);
@@ -281,6 +295,17 @@ public class TransferActivity extends AppCompatActivity {
 
                         xvals2.add(GetKE(P2));
                         yvals2.add(GetThetaLab(P2));
+
+                        // momentum transfer
+                        xvals3.add(GetThetaLab(P2));
+                        double[] Q = new double[3];
+                        Q[0] = P2[0] - Pa[0];
+                        Q[1] = P2[1] - Pa[1];
+                        Q[2] = P2[2] - Pa[2];
+
+                        double q = GetMomentum(Q);
+                        double L = sqrt( Math.pow(q*r/hbar, 2) + 0.25 ) - 0.5;
+                        xvals3.add(L);
 
                         if(abs(yvals1.get(j)) > maxY){
                             maxY = abs(yvals1.get(j));
@@ -326,6 +351,7 @@ public class TransferActivity extends AppCompatActivity {
 
                     XYSeries s1 = new SimpleXYSeries(xvals1, yvals1, "P1");
                     XYSeries s2 = new SimpleXYSeries(xvals2, yvals2, "P2");
+                    XYSeries s3 = new SimpleXYSeries(xvals3, yvals3, "Q = P2-Pa");
 
                     LineAndPointFormatter s1Format = new LineAndPointFormatter(Color.BLUE, null, null, null);
                     LineAndPointFormatter s2Format = new LineAndPointFormatter(Color.RED, null, null, null);
@@ -333,6 +359,10 @@ public class TransferActivity extends AppCompatActivity {
                     plot.clear();
                     plot.addSeries(s1, s1Format);
                     plot.addSeries(s2, s2Format);
+
+                    plot2.clear();
+                    plot2.addSeries(s3, s1Format);
+                    plot2.redraw();
 
                     //Find y range
                     plot.setDomainBoundaries(minX, maxX, BoundaryMode.FIXED);
@@ -446,6 +476,14 @@ public class TransferActivity extends AppCompatActivity {
         }
 
         return  Math.atan2(vec[2], vec[1])*180./Math.PI;
+    }
+
+    private double GetMomentum(double[] vec){
+        if( vec.length != 3){
+            return 0.0;
+        }
+
+        return  sqrt(vec[1] * vec[1] + vec[2]*vec[2]);
     }
 
 }

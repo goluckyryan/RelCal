@@ -7,10 +7,10 @@
     tools:context="com.user.relcal.MainActivity">
 
     <LinearLayout
-        android:focusable="true"
-        android:focusableInTouchMode="true"
         android:layout_width="0px"
-        android:layout_height="0px"/>
+        android:layout_height="0px"
+        android:focusable="true"
+        android:focusableInTouchMode="true" />
 
     <EditText
         android:id="@+id/editText_Pa"
@@ -20,12 +20,12 @@
         android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="text"
+        android:nextFocusDown="@+id/editText_Pb"
         android:selectAllOnFocus="true"
         android:text="12C"
         android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:nextFocusDown="@+id/editText_Pb"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/editText_Pb"
@@ -33,12 +33,12 @@
         android:layout_height="49dp"
         android:ems="10"
         android:inputType="text"
+        android:nextFocusDown="@+id/editText_P1"
         android:selectAllOnFocus="true"
         android:text="2H"
         android:textAlignment="center"
         app:layout_constraintBaseline_toBaselineOf="@+id/editText_Pa"
-        app:layout_constraintStart_toEndOf="@+id/textViewLB"
-        android:nextFocusDown="@+id/editText_P1"/>
+        app:layout_constraintStart_toEndOf="@+id/textViewLB" />
 
     <EditText
         android:id="@+id/editText_P1"
@@ -46,12 +46,12 @@
         android:layout_height="49dp"
         android:ems="10"
         android:inputType="text"
+        android:nextFocusDown="@+id/editText_TLab"
         android:selectAllOnFocus="true"
         android:text="1H"
         android:textAlignment="center"
         app:layout_constraintBaseline_toBaselineOf="@+id/editText_Pa"
-        app:layout_constraintStart_toEndOf="@+id/textViewComma"
-        android:nextFocusDown="@+id/editText_TLab"/>
+        app:layout_constraintStart_toEndOf="@+id/textViewComma" />
 
     <TextView
         android:id="@+id/textViewLB"
@@ -131,11 +131,11 @@
         android:layout_marginTop="80dp"
         android:ems="10"
         android:inputType="numberDecimal"
+        android:nextFocusDown="@+id/editText_Ex"
         android:selectAllOnFocus="true"
         android:textAlignment="center"
         app:layout_constraintStart_toEndOf="@+id/textView_TLab"
-        app:layout_constraintTop_toTopOf="parent"
-        android:nextFocusDown="@+id/editText_Ex"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <SeekBar
         android:id="@+id/seekBar"
@@ -245,31 +245,13 @@
         android:layout_marginEnd="16dp"
         android:ems="10"
         android:inputType="numberDecimal"
+        android:nextFocusDown="@+id/editText_Pa"
         android:text="0"
         android:textAlignment="center"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView_Ex"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:nextFocusDown="@+id/editText_Pa"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <com.androidplot.xy.XYPlot
-        android:id="@+id/plot"
-        style="@style/APDefacto.Light"
-        android:layout_width="match_parent"
-        android:layout_height="276dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@color/ap_transparent"
-        app:backgroundColor="@color/ap_transparent"
-        app:graphBackgroundColor="@color/ap_transparent"
-        app:domainTitle="@string/plot_Xaxis"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_4vP2"
-        app:lineLabels="left|bottom"
-        app:rangeTitle="@string/plot_Yaxis" />
+
 
     <TextView
         android:id="@+id/textView_QValue"
@@ -280,5 +262,88 @@
         android:textSize="18sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView_P2"
         app:layout_constraintEnd_toEndOf="parent" />
+
+
+    <TabHost
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_4vP2">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TabWidget
+                android:id="@android:id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:id="@+id/tab1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <com.androidplot.xy.XYPlot
+                        android:id="@+id/plot"
+                        style="@style/APDefacto.Light"
+                        android:layout_width="match_parent"
+                        android:layout_height="276dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@color/ap_transparent"
+                        app:backgroundColor="@color/ap_transparent"
+                        app:domainTitle="@string/plot_Xaxis"
+                        app:graphBackgroundColor="@color/ap_transparent"
+                        app:lineLabels="left|bottom"
+                        app:rangeTitle="@string/plot_Yaxis"
+                        app:renderMode="use_background_thread" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/tab2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <com.androidplot.xy.XYPlot
+                        android:id="@+id/plot2"
+                        style="@style/APDefacto.Light"
+                        android:layout_width="match_parent"
+                        android:layout_height="276dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@color/ap_transparent"
+                        app:backgroundColor="@color/ap_transparent"
+                        app:domainTitle="@string/plot2_Xaxis"
+                        app:graphBackgroundColor="@color/ap_transparent"
+                        app:lineLabels="left|bottom"
+                        app:rangeTitle="@string/plot2_Yaxis"
+                        app:renderMode="use_background_thread" />
+
+                </LinearLayout>
+
+            </FrameLayout>
+        </LinearLayout>
+    </TabHost>
+
 
 </android.support.constraint.ConstraintLayout>
