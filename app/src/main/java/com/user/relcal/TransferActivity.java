@@ -308,19 +308,21 @@ public class TransferActivity extends AppCompatActivity {
 
                     if( maxY > 90){
                         maxY = 180;
-                    }else if( maxY >30){
+                    }else if( 90 >= maxY && maxY >30){
                         maxY = 60;
                     }else{
                         maxY = 30;
                     }
 
 
-                    maxX = Math.ceil( maxX * 1.1 );
-                    if( minX < 0) {
-                        minX = Math.floor(minX * 1.1);
-                    }else{
-                        minX = Math.floor(minX * 0.9);
-                    }
+                    maxX = Math.round(maxX/10.0) * 10;
+                    minX = Math.round(minX/10.0) * 10;
+
+                    //if( minX < 0) {
+                    //    minX = Math.floor(minX * 1.1);
+                    //}else{
+                    //    minX = Math.floor(minX * 0.9);
+                    //}
 
                     XYSeries s1 = new SimpleXYSeries(xvals1, yvals1, "P1");
                     XYSeries s2 = new SimpleXYSeries(xvals2, yvals2, "P2");

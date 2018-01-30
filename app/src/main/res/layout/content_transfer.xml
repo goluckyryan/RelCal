@@ -104,12 +104,14 @@
 
     <TextView
         android:id="@+id/textView_4vPa"
-        android:layout_width="300dp"
+        android:layout_width="0dp"
         android:layout_height="28dp"
+        android:layout_marginEnd="8dp"
         android:fontFamily="monospace"
         android:text=""
         android:textSize="14sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView_Pa"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView_Pa" />
 
     <TextView
@@ -169,10 +171,12 @@
 
     <TextView
         android:id="@+id/textView_4vPb"
-        android:layout_width="300dp"
+        android:layout_width="0dp"
         android:layout_height="24dp"
+        android:layout_marginEnd="8dp"
         android:fontFamily="monospace"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView_Pb"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView_Pb" />
 
     <TextView
@@ -187,10 +191,12 @@
 
     <TextView
         android:id="@+id/textView_4vP1"
-        android:layout_width="300dp"
+        android:layout_width="0dp"
         android:layout_height="24dp"
+        android:layout_marginEnd="8dp"
         android:fontFamily="monospace"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView_P1"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView_P1" />
 
     <TextView
@@ -205,10 +211,12 @@
 
     <TextView
         android:id="@+id/textView_4vP2"
-        android:layout_width="300dp"
+        android:layout_width="0dp"
         android:layout_height="24dp"
+        android:layout_marginEnd="8dp"
         android:fontFamily="monospace"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView_P2_2"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView_P2_2" />
 
     <TextView
