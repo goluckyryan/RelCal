@@ -117,9 +117,9 @@ public class TransferActivity extends AppCompatActivity {
                 100, VerticalPositioning.ABSOLUTE_FROM_BOTTOM);
 
         plot2.clear();
-        plot2.getLegend().position(100, HorizontalPositioning.ABSOLUTE_FROM_CENTER,
+        plot2.getLegend().position(0, HorizontalPositioning.ABSOLUTE_FROM_CENTER,
                 0, VerticalPositioning.ABSOLUTE_FROM_TOP);
-        plot2.getDomainTitle().position(0, HorizontalPositioning.ABSOLUTE_FROM_CENTER,
+        plot2.getDomainTitle().position(-50, HorizontalPositioning.ABSOLUTE_FROM_CENTER,
                 100, VerticalPositioning.ABSOLUTE_FROM_BOTTOM);
         plot2.setUserRangeOrigin(0);
         plot2.setRangeStep(StepMode.INCREMENT_BY_VAL, 1);
@@ -285,10 +285,18 @@ public class TransferActivity extends AppCompatActivity {
                     List<Double> xvals3 = new ArrayList<>();
                     List<Double> yvals3 = new ArrayList<>();
 
-                    double maxX = 0 , maxY = 0, minX = 0, maxY2 = 0, minY2 = 100, maxX2 = 0;
+                    List<Double> xvals4 = new ArrayList<>();
+                    List<Double> yvals4 = new ArrayList<>();
 
-                    double r = 1.25 * Math.pow(mb.A, 1./3.);
+                    double maxX = 0 , maxY = 0, minX = 0, maxY2 = 0, minY2 = 100;
+
+                    double ra = 1.25 * Math.pow(ma.A, 1./3.);
+                    double rb = 1.25 * Math.pow(mb.A, 1./3.);
                     double hbar = 197.327 ;
+
+                    TransferReaction(0);
+                    double beta = GetMomentum(Pa) / Pa[0];
+                    double gamma = 1/sqrt(1-beta*beta);
 
                     for( int j = 0 ; j < 360; j++){
                         TransferReaction(j);
@@ -299,49 +307,45 @@ public class TransferActivity extends AppCompatActivity {
                         xvals2.add(GetKE(P2));
                         yvals2.add(GetThetaLab(P2));
 
-                        // momentum transfer
-                        xvals3.add(GetThetaLab(P2));
-
+                        // momentum transfer to P1
+                        xvals3.add(GetThetaLab(P1));
                         double Qx = P2[1] - Pa[1];
                         double Qy = P2[2] - Pa[2];
-
                         double q = sqrt(Qx * Qx + Qy * Qy);
-                        double L = sqrt( Math.pow(q*r/hbar, 2) + 0.25 ) - 0.5;
-                        yvals3.add(L);
+                        double L1 = sqrt( Math.pow(q*rb/hbar, 2) + 0.25 ) - 0.5;
+                        yvals3.add(L1);
 
-                        if( L > maxY2){
-                            maxY2 = L;
-                        }
+                        //momentum transfer to Pb
+                        xvals4.add(GetThetaLab(P2));
+                        //---- cal the momentum in beam rest frame
+                        double PbIx = - gamma * beta* Pb[0] + gamma * Pb[1];
+                        double PbIy = Pb[2];
 
-                        if( L < minY2){
-                            minY2 = L;
-                        }
+                        double P1Ix = - gamma * beta* P1[0] + gamma * P1[1];
+                        double P1Iy = P1[2];
 
-                        if( xvals3.get(j) > maxX2){
-                            maxX2 = xvals3.get(j);
-                        }
+                        Qx = P1Ix - PbIx;
+                        Qy = P1Iy - PbIy;
+                        q = sqrt(Qx * Qx + Qy * Qy);
+                        double L2 = sqrt( Math.pow(q*ra/hbar, 2) + 0.25 ) - 0.5;
+                        yvals4.add(L2);
 
-                        if(abs(yvals1.get(j)) > maxY){
-                            maxY = abs(yvals1.get(j));
-                        }
 
-                        if(abs(yvals2.get(j)) > maxY){
-                            maxY = abs(yvals2.get(j));
-                        }
+                        if( L1 > maxY2) maxY2 = L1;
+                        if( L1 < minY2) minY2 = L1;
 
-                        if(xvals1.get(j) > maxX){
-                            maxX = xvals1.get(j);
-                        }
-                        if(xvals2.get(j) > maxX){
-                            maxX = xvals2.get(j);
-                        }
+                        if( L2 > maxY2) maxY2 = L2;
+                        if( L2 < minY2) minY2 = L2;
 
-                        if(xvals1.get(j) < minX){
-                            minX = xvals1.get(j);
-                        }
-                        if(xvals2.get(j) < minX){
-                            minX = xvals2.get(j);
-                        }
+
+                        if(abs(yvals1.get(j)) > maxY) maxY = abs(yvals1.get(j));
+                        if(abs(yvals2.get(j)) > maxY) maxY = abs(yvals2.get(j));
+                        if(xvals1.get(j) > maxX) maxX = xvals1.get(j);
+                        if(xvals2.get(j) > maxX) maxX = xvals2.get(j);
+
+                        if(xvals1.get(j) < minX) minX = xvals1.get(j);
+                        if(xvals2.get(j) < minX) minX = xvals2.get(j);
+
                         //Log.i("Read","i " + Integer.toString(j) + " , (x, y) = (" + xvals1.get(j)+", " + yvals1.get(j));
                     }
 
@@ -358,13 +362,12 @@ public class TransferActivity extends AppCompatActivity {
 
                     plot.setDomainStep(StepMode.INCREMENT_BY_VAL, (maxX - minX)/10);
 
-                    maxX2 = Math.round(Math.ceil(maxX2+5)/10.0) * 10;
-
-                    plot2.setDomainStep(StepMode.INCREMENT_BY_VAL, maxX2/10);
+                    plot2.setDomainStep(StepMode.INCREMENT_BY_VAL, maxY/10);
 
                     XYSeries s1 = new SimpleXYSeries(xvals1, yvals1, "P1");
                     XYSeries s2 = new SimpleXYSeries(xvals2, yvals2, "P2");
-                    XYSeries s3 = new SimpleXYSeries(xvals3, yvals3, "Q = P2-Pa");
+                    XYSeries s3 = new SimpleXYSeries(xvals3, yvals3, "L(target)");
+                    XYSeries s4 = new SimpleXYSeries(xvals4, yvals4, "L(beam)");
 
                     LineAndPointFormatter s1Format = new LineAndPointFormatter(Color.BLUE, null, null, null);
                     LineAndPointFormatter s2Format = new LineAndPointFormatter(Color.RED, null, null, null);
@@ -375,16 +378,18 @@ public class TransferActivity extends AppCompatActivity {
 
                     plot2.clear();
                     plot2.addSeries(s3, s1Format);
+                    plot2.addSeries(s4, s2Format);
 
                     //Find y range
                     plot.setDomainBoundaries(minX, maxX, BoundaryMode.FIXED);
                     plot.setRangeBoundaries(-maxY, maxY, BoundaryMode.FIXED);
                     plot.redraw();
 
-                    plot2.setDomainBoundaries(0, maxX2, BoundaryMode.FIXED);
+                    plot2.setDomainBoundaries(0, maxY, BoundaryMode.FIXED);
                     plot2.setRangeBoundaries(Math.floor(minY2), Math.ceil(maxY2), BoundaryMode.FIXED);
                     plot2.redraw();
 
+                    TransferReaction(0);
                     P1vec.setText(displays4vec(P1));
                     P2vec.setText(displays4vec(P2));
 
@@ -435,6 +440,7 @@ public class TransferActivity extends AppCompatActivity {
     }
 
     private void TransferReaction(double thetaCM){
+        // reaction notation a(b,1)2
         double[] Pcm = new double[3];
         Pcm[0] = (Pa[0]+Pb[0])/2;
         Pcm[1] = (Pa[1]+Pb[1])/2;
@@ -461,8 +467,8 @@ public class TransferActivity extends AppCompatActivity {
         p = p/2/Etot;
 
         P1c[0] = sqrt(m1.mass*m1.mass + p*p);
-        P1c[1] = p * cos(thetaCM * Math.PI/180.);
-        P1c[2] = p * sin(thetaCM * Math.PI/180.);
+        P1c[1] = - p * cos(thetaCM * Math.PI/180.);
+        P1c[2] = - p * sin(thetaCM * Math.PI/180.);
 
         P2c[0] = sqrt(m2.mass*m2.mass + p*p);
         P2c[1] = - P1c[1];
