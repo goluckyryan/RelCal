@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.user.relcal.MainActivity">
+
+    <LinearLayout
+        android:layout_width="0px"
+        android:layout_height="0px"
+        android:focusable="true"
+        android:focusableInTouchMode="true" />
+
+    <EditText
+        android:id="@+id/editText_Pa"
+        android:layout_width="60dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:inputType="text"
+        android:nextFocusDown="@+id/editText_Pb"
+        android:selectAllOnFocus="true"
+        android:text="12C"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editText_Pb"
+        android:layout_width="60dp"
+        android:layout_height="49dp"
+        android:ems="10"
+        android:inputType="text"
+        android:nextFocusDown="@+id/editText_P1"
+        android:selectAllOnFocus="true"
+        android:text="2H"
+        android:textAlignment="center"
+        app:layout_constraintBaseline_toBaselineOf="@+id/editText_Pa"
+        app:layout_constraintStart_toEndOf="@+id/textViewLB" />
+
+    <EditText
+        android:id="@+id/editText_P1"
+        android:layout_width="60dp"
+        android:layout_height="49dp"
+        android:ems="10"
+        android:inputType="text"
+        android:nextFocusDown="@+id/editText_TLab"
+        android:selectAllOnFocus="true"
+        android:text="1H"
+        android:textAlignment="center"
+        app:layout_constraintBaseline_toBaselineOf="@+id/editText_Pa"
+        app:layout_constraintStart_toEndOf="@+id/textViewComma" />
+
+    <TextView
+        android:id="@+id/textViewLB"
+        android:layout_width="0dp"
+        android:layout_height="34dp"
+        android:text="( "
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/editText_Pa"
+        app:layout_constraintStart_toEndOf="@+id/editText_Pa" />
+
+    <TextView
+        android:id="@+id/textView_P2"
+        android:layout_width="60dp"
+        android:layout_height="25dp"
+        android:text="13C"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textViewRB"
+        app:layout_constraintStart_toEndOf="@+id/textViewRB" />
+
+    <TextView
+        android:id="@+id/textViewComma"
+        android:layout_width="9dp"
+        android:layout_height="30dp"
+        android:text=","
+        android:textSize="24sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/editText_Pb"
+        app:layout_constraintStart_toEndOf="@+id/editText_Pb" />
+
+    <TextView
+        android:id="@+id/textViewRB"
+        android:layout_width="11dp"
+        android:layout_height="wrap_content"
+        android:text=")"
+        android:textSize="24sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/editText_P1"
+        app:layout_constraintStart_toEndOf="@+id/editText_P1" />
+
+    <TextView
+        android:id="@+id/textView_TLab"
+        android:layout_width="102dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="16dp"
+        android:text="@string/TLab_label"
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/editText_TLab"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/editText_TLab"
+        android:layout_width="82dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="80dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:nextFocusDown="@+id/editText_Ex"
+        android:selectAllOnFocus="true"
+        android:textAlignment="center"
+        app:layout_constraintStart_toEndOf="@+id/textView_TLab"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_Ex"
+        android:layout_width="42dp"
+        android:layout_height="38dp"
+        android:text="@string/Ex_label"
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/editText_TLab"
+        app:layout_constraintEnd_toStartOf="@+id/editText_Ex" />
+
+    <EditText
+        android:id="@+id/editText_Ex"
+        android:layout_width="86dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:nextFocusDown="@+id/editText_Pa"
+        android:text="0"
+        android:textAlignment="center"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView_Ex"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+
+    <TextView
+        android:id="@+id/textView_QValue"
+        android:layout_width="114dp"
+        android:layout_height="39dp"
+        android:layout_marginEnd="8dp"
+        android:text="Q : "
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView_P2"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="150dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <LinearLayout
+            android:id="@+id/tab1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.androidplot.xy.XYPlot
+                android:id="@+id/plot"
+                style="@style/APDefacto.Light"
+                android:layout_width="match_parent"
+                android:layout_height="276dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/ap_transparent"
+                app:backgroundColor="@color/ap_transparent"
+                app:domainTitle="@string/plot_Xaxis"
+                app:graphBackgroundColor="@color/ap_transparent"
+                app:lineLabels="left|bottom"
+                app:rangeTitle="@string/plot_Yaxis"
+                app:renderMode="use_background_thread" />
+
+
+            <com.androidplot.xy.XYPlot
+                android:id="@+id/plot2"
+                style="@style/APDefacto.Light"
+                android:layout_width="match_parent"
+                android:layout_height="276dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/ap_transparent"
+                app:backgroundColor="@color/ap_transparent"
+                app:domainTitle="@string/plot2_Xaxis"
+                app:graphBackgroundColor="@color/ap_transparent"
+                app:layout_constraintTop_toBottomOf="@+id/plot"
+                app:lineLabels="left|bottom"
+                app:rangeTitle="@string/plot2_Yaxis"
+                app:renderMode="use_background_thread" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</android.support.constraint.ConstraintLayout>

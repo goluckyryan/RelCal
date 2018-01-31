@@ -3,11 +3,8 @@ package com.user.relcal;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Color;
-import android.hardware.input.InputManager;
-import android.opengl.GLSurfaceView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -16,9 +13,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.androidplot.ui.HorizontalPositioning;
-import com.androidplot.ui.LayoutManager;
 import com.androidplot.ui.VerticalPositioning;
-import com.androidplot.util.Layerable;
 import com.androidplot.xy.BoundaryMode;
 import com.androidplot.xy.LineAndPointFormatter;
 import com.androidplot.xy.SimpleXYSeries;
@@ -26,18 +21,9 @@ import com.androidplot.xy.StepMode;
 import com.androidplot.xy.XYPlot;
 import com.androidplot.xy.XYSeries;
 
-import java.awt.font.NumericShaper;
-import java.lang.reflect.Array;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
-import static java.lang.Integer.min;
-import static java.lang.Integer.numberOfLeadingZeros;
-import static java.lang.Integer.parseInt;
 import static java.lang.Math.abs;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
@@ -80,7 +66,7 @@ public class TransferActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transfer);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle("Transfer Reaction");
 
         assetManager = getAssets();
