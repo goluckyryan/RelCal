@@ -5,6 +5,7 @@ import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -26,6 +27,7 @@ import java.util.List;
 
 import static java.lang.Math.abs;
 import static java.lang.Math.cos;
+import static java.lang.Math.pow;
 import static java.lang.Math.sin;
 import static java.lang.Math.sqrt;
 
@@ -47,6 +49,8 @@ public class TransferActivity extends AppCompatActivity {
     EditText P1Name;
     TextView P2Name;
 
+    TextView infoView;
+
     TextView Pavec;
     TextView Pbvec;
     TextView P1vec;
@@ -61,6 +65,9 @@ public class TransferActivity extends AppCompatActivity {
 
     private XYPlot plot;
     private XYPlot plot2;
+
+    double betaInc = 0;
+    double k_cm = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +89,9 @@ public class TransferActivity extends AppCompatActivity {
         PbName = findViewById(R.id.editText_Pb);
         P1Name = findViewById(R.id.editText_P1);
         P2Name = findViewById(R.id.textView_P2);
+
+        infoView = findViewById(R.id.textView_info);
+        SetInfo(betaInc, k_cm);
 
         Pavec = findViewById(R.id.textView_4vPa);
         Pbvec = findViewById(R.id.textView_4vPb);
@@ -123,7 +133,7 @@ public class TransferActivity extends AppCompatActivity {
                     P2vec.setText(""+m2.mass);
 
                     QValueView.setText(String.format("Q : %5.2f [MeV]",ma.mass + mb.mass - m1.mass - m2.mass));
-
+                    SetInfo(0,0);
                 }
             }
         });
@@ -142,6 +152,7 @@ public class TransferActivity extends AppCompatActivity {
                     P2vec.setText(""+m2.mass);
 
                     QValueView.setText(String.format("Q : %5.2f [MeV]",ma.mass + mb.mass - m1.mass - m2.mass));
+                    SetInfo(0,0);
 
                     return true;
                 }
@@ -162,7 +173,7 @@ public class TransferActivity extends AppCompatActivity {
                     P2vec.setText(""+m2.mass);
 
                     QValueView.setText(String.format("Q : %5.2f [MeV]",ma.mass + mb.mass - m1.mass - m2.mass));
-
+                    SetInfo(0,0);
                 }
             }
         });
@@ -181,7 +192,7 @@ public class TransferActivity extends AppCompatActivity {
                     P2vec.setText(""+m2.mass);
 
                     QValueView.setText(String.format("Q : %5.2f [MeV]",ma.mass + mb.mass - m1.mass - m2.mass));
-
+                    SetInfo(0,0);
                     return true;
                 }
                 return false;
@@ -201,7 +212,7 @@ public class TransferActivity extends AppCompatActivity {
                     P2vec.setText(""+m2.mass);
 
                     QValueView.setText(String.format("Q : %5.2f [MeV]",ma.mass + mb.mass - m1.mass - m2.mass));
-
+                    SetInfo(0,0);
                 }
             }
         });
@@ -220,7 +231,7 @@ public class TransferActivity extends AppCompatActivity {
                     P2vec.setText(""+m2.mass);
 
                     QValueView.setText(String.format("Q : %5.2f [MeV]",ma.mass + mb.mass - m1.mass - m2.mass));
-
+                    SetInfo(0,0);
                     return true;
                 }
                 return false;
@@ -283,6 +294,7 @@ public class TransferActivity extends AppCompatActivity {
                     TransferReaction(0);
                     double beta = GetMomentum(Pa) / Pa[0];
                     double gamma = 1/sqrt(1-beta*beta);
+                    SetInfo(betaInc,k_cm);
 
                     for( int j = 0 ; j < 360; j++){
                         TransferReaction(j);
@@ -410,6 +422,16 @@ public class TransferActivity extends AppCompatActivity {
 
     }
 
+    private void SetInfo(double beta, double k){
+        double TlabMin = (Math.pow(m1.mass+m2.mass,2) - Math.pow(ma.mass+mb.mass,2))/2./ma.A/mb.mass;
+        infoView.setText(String.format("%s :  %5.2f [A MeV], %s : %6.4f, k : %5.2f[MeV/c]",
+                Html.fromHtml("T<sub><small>Lab<small></sub>"),
+                TlabMin,
+                Html.fromHtml("\u03b2"),
+                beta,
+                k));
+    }
+
     private String displays4vec(double[] vec){
         //DecimalFormat df = new DecimalFormat("#.###");
         //df.setRoundingMode(RoundingMode.HALF_UP);
@@ -432,40 +454,40 @@ public class TransferActivity extends AppCompatActivity {
         Pcm[1] = (Pa[1]+Pb[1])/2;
         Pcm[2] = 0;
 
-        double beta = Pcm[1]/Pcm[0];
-        double gamma = 1/sqrt(1-beta*beta);
+        betaInc = Pcm[1]/Pcm[0];
+        double gamma = 1/sqrt(1-betaInc*betaInc);
 
         double[] Pac = new double[3];
         double[] Pbc = new double[3];
         double[] P1c = new double[3];
         double[] P2c = new double[3];
 
-        Pac[0] = gamma * Pa[0] - gamma * beta * Pa[1];
-        Pac[1] = -gamma * beta * Pa[0] + gamma * Pa[1];
+        Pac[0] = gamma * Pa[0] - gamma * betaInc * Pa[1];
+        Pac[1] = -gamma * betaInc * Pa[0] + gamma * Pa[1];
         Pac[2] = 0;
 
-        Pbc[0] = gamma * Pb[0] - gamma * beta * Pb[1];
-        Pbc[1] = -gamma * beta * Pb[0] + gamma * Pb[1];
+        Pbc[0] = gamma * Pb[0] - gamma * betaInc * Pb[1];
+        Pbc[1] = -gamma * betaInc * Pb[0] + gamma * Pb[1];
         Pbc[2] = 0;
 
         double Etot = Pac[0] + Pbc[0];
         double p = sqrt((Etot - m1.mass - m2.mass)*(Etot + m1.mass - m2.mass)*(Etot - m1.mass + m2.mass)*(Etot + m1.mass + m2.mass));
-        p = p/2/Etot;
+        k_cm = p/2/Etot;
 
-        P1c[0] = sqrt(m1.mass*m1.mass + p*p);
-        P1c[1] = - p * cos(thetaCM * Math.PI/180.);
-        P1c[2] = - p * sin(thetaCM * Math.PI/180.);
+        P1c[0] = sqrt(m1.mass*m1.mass + k_cm*k_cm);
+        P1c[1] = - k_cm * cos(thetaCM * Math.PI/180.);
+        P1c[2] = - k_cm * sin(thetaCM * Math.PI/180.);
 
-        P2c[0] = sqrt(m2.mass*m2.mass + p*p);
+        P2c[0] = sqrt(m2.mass*m2.mass + k_cm*k_cm);
         P2c[1] = - P1c[1];
         P2c[2] = - P1c[2];
 
-        P1[0] = gamma * P1c[0] + gamma * beta * P1c[1];
-        P1[1] = gamma * beta * P1c[0] + gamma * P1c[1];
+        P1[0] = gamma * P1c[0] + gamma * betaInc * P1c[1];
+        P1[1] = gamma * betaInc * P1c[0] + gamma * P1c[1];
         P1[2] = P1c[2];
 
-        P2[0] = gamma * P2c[0] + gamma * beta * P2c[1];
-        P2[1] = gamma * beta * P2c[0] + gamma * P2c[1];
+        P2[0] = gamma * P2c[0] + gamma * betaInc * P2c[1];
+        P2[1] = gamma * betaInc * P2c[0] + gamma * P2c[1];
         P2[2] = P2c[2];
 
     }
