@@ -18,16 +18,18 @@
     <string name="Sn_label">Sn [MeV]</string>
     <string name="momt_label">momt [MeV c<sup><small>-1</small></sup>]</string>
     <string name="TLab_label">T<sub><small>Lab</small></sub> [A.MeV]</string>
+    <string name="TMin_label">min(T<sub><small>Lab</small></sub>)</string>
     <string name="thetaCM_label">\u03B8<sub><small>CM</small></sub> [deg]</string>
     <string name="beam_label">P<sub><small>beam</small></sub></string>
     <string name="target_label">P<sub><small>target</small></sub></string>
     <string name="p1_label">P<sub><small>1</small></sub></string>
     <string name="p2_label">P<sub><small>2</small></sub></string>
-    <string name="Ex_label">E<sub><small>x</small></sub></string>
+    <string name="Ex_label">E<sub><small>x</small></sub> [MeV]</string>
     <string name="plot_Xaxis">E<sub><small>Lab</small></sub> [MeV]</string>
     <string name="plot_Yaxis">\u03B8<sub><small>Lab</small></sub> [deg]</string>
     <string name="plot2_Xaxis">\u03B8<sub><small>Lab</small></sub> [deg]</string>
     <string name="plot2_Yaxis">L [ħ]</string>
-    <string name="tab1_name">\u03B8<sub><small>Lab</small></sub> vs E<sub><small>Lab</small></sub></string>
-    <string name="tab2_name">L vs \u03B8<sub><small>Lab</small></sub></string>
+
+    <string name="plotH1_Xaxis">Z [m]</string>
+    <string name="plotH2_Yaxis">r [m]</string>
 </resources>

@@ -15,7 +15,7 @@
     <EditText
         android:id="@+id/editText_Pa"
         android:layout_width="60dp"
-        android:layout_height="49dp"
+        android:layout_height="40dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:ems="10"
@@ -30,7 +30,7 @@
     <EditText
         android:id="@+id/editText_Pb"
         android:layout_width="60dp"
-        android:layout_height="49dp"
+        android:layout_height="40dp"
         android:ems="10"
         android:inputType="text"
         android:nextFocusDown="@+id/editText_P1"
@@ -43,7 +43,7 @@
     <EditText
         android:id="@+id/editText_P1"
         android:layout_width="60dp"
-        android:layout_height="49dp"
+        android:layout_height="40dp"
         android:ems="10"
         android:inputType="text"
         android:nextFocusDown="@+id/editText_TLab"
@@ -56,7 +56,7 @@
     <TextView
         android:id="@+id/textViewLB"
         android:layout_width="0dp"
-        android:layout_height="34dp"
+        android:layout_height="30dp"
         android:text="( "
         android:textAlignment="center"
         android:textSize="24sp"
@@ -66,7 +66,7 @@
     <TextView
         android:id="@+id/textView_P2"
         android:layout_width="60dp"
-        android:layout_height="25dp"
+        android:layout_height="30dp"
         android:text="13C"
         android:textAlignment="center"
         android:textSize="18sp"
@@ -85,7 +85,7 @@
     <TextView
         android:id="@+id/textViewRB"
         android:layout_width="11dp"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:text=")"
         android:textSize="24sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/editText_P1"
@@ -94,9 +94,10 @@
     <TextView
         android:id="@+id/textView_TLab"
         android:layout_width="102dp"
-        android:layout_height="27dp"
+        android:layout_height="30dp"
         android:layout_marginStart="16dp"
         android:text="@string/TLab_label"
+        android:textAlignment="textEnd"
         android:textSize="18sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/editText_TLab"
         app:layout_constraintStart_toStartOf="parent" />
@@ -104,44 +105,43 @@
     <EditText
         android:id="@+id/editText_TLab"
         android:layout_width="82dp"
-        android:layout_height="38dp"
-        android:layout_marginTop="80dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="60dp"
         android:ems="10"
         android:inputType="numberDecimal"
-        android:nextFocusDown="@+id/editText_Ex"
+        android:nextFocusDown="@+id/editText_Tmin"
         android:selectAllOnFocus="true"
         android:textAlignment="center"
         app:layout_constraintStart_toEndOf="@+id/textView_TLab"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView_Ex"
-        android:layout_width="42dp"
-        android:layout_height="38dp"
-        android:text="@string/Ex_label"
+        android:id="@+id/textView_Tmin_label"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:text="@string/TMin_label"
+        android:textAlignment="textEnd"
         android:textSize="18sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/editText_TLab"
-        app:layout_constraintEnd_toStartOf="@+id/editText_Ex" />
+        app:layout_constraintEnd_toStartOf="@+id/textView_Tmin" />
 
-    <EditText
-        android:id="@+id/editText_Ex"
+    <TextView
+        android:id="@+id/textView_Tmin"
         android:layout_width="86dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="8dp"
         android:ems="10"
-        android:inputType="numberDecimal"
         android:nextFocusDown="@+id/editText_Pa"
-        android:text="0"
         android:textAlignment="center"
-        app:layout_constraintBaseline_toBaselineOf="@+id/textView_Ex"
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView_Tmin_label"
         app:layout_constraintEnd_toEndOf="parent" />
-
 
 
     <TextView
         android:id="@+id/textView_QValue"
         android:layout_width="114dp"
-        android:layout_height="39dp"
+        android:layout_height="30dp"
         android:layout_marginEnd="8dp"
         android:text="Q : "
         android:textSize="18sp"
@@ -155,7 +155,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="180dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -179,10 +179,10 @@
                 android:layout_marginTop="8dp"
                 android:background="@color/ap_transparent"
                 app:backgroundColor="@color/ap_transparent"
-                app:domainTitle="@string/plot_Xaxis"
+                app:domainTitle="@string/plotH1_Xaxis"
                 app:graphBackgroundColor="@color/ap_transparent"
                 app:lineLabels="left|bottom"
-                app:rangeTitle="@string/plot_Yaxis"
+                app:rangeTitle="@string/TLab_label"
                 app:renderMode="use_background_thread" />
 
 
@@ -197,16 +197,84 @@
                 android:layout_marginTop="8dp"
                 android:background="@color/ap_transparent"
                 app:backgroundColor="@color/ap_transparent"
-                app:domainTitle="@string/plot2_Xaxis"
+                app:domainTitle="@string/plotH1_Xaxis"
                 app:graphBackgroundColor="@color/ap_transparent"
                 app:layout_constraintTop_toBottomOf="@+id/plot"
                 app:lineLabels="left|bottom"
-                app:rangeTitle="@string/plot2_Yaxis"
+                app:rangeTitle="@string/plotH2_Yaxis"
                 app:renderMode="use_background_thread" />
 
         </LinearLayout>
 
     </ScrollView>
+
+    <TextView
+        android:id="@+id/textView_Ex"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/Ex_label"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/textView_thetaCM"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_TLab" />
+
+    <SeekBar
+        android:id="@+id/seekBar_Ex"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/textView_ExShow"
+        app:layout_constraintStart_toEndOf="@+id/textView_Ex"
+        app:layout_constraintTop_toTopOf="@+id/textView_Ex" />
+
+    <TextView
+        android:id="@+id/textView_ExShow"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="8dp"
+        android:text="0"
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView_Ex"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_thetaCM"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/thetaCM_label"
+        android:textAlignment="textEnd"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_Ex" />
+
+    <SeekBar
+        android:id="@+id/seekBar_thetaCM"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:max="180"
+        app:layout_constraintEnd_toStartOf="@+id/textView_thetaCM_Show"
+        app:layout_constraintStart_toEndOf="@+id/textView_thetaCM"
+        app:layout_constraintTop_toTopOf="@+id/textView_thetaCM" />
+
+    <TextView
+        android:id="@+id/textView_thetaCM_Show"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="8dp"
+        android:text="0"
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView_thetaCM"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </android.support.constraint.ConstraintLayout>

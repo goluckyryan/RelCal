@@ -27,14 +27,13 @@ import java.util.List;
 
 import static java.lang.Math.abs;
 import static java.lang.Math.cos;
-import static java.lang.Math.pow;
 import static java.lang.Math.sin;
 import static java.lang.Math.sqrt;
 
 
 public class TransferActivity extends AppCompatActivity {
 
-    Nucleus ma, mb, m1, m2;
+    Nucleus ma, mb, m1, m2; //reaction a(b,1)2
     Double TLab, Ex;
     int thetaCM;
     double[] Pa = new double[3]; // (E, x, y);
@@ -101,7 +100,7 @@ public class TransferActivity extends AppCompatActivity {
         TLabInput = findViewById(R.id.editText_TLab);
         thetaCM_seekBar = findViewById(R.id.seekBar);
         theta_reading_display = findViewById(R.id.textView_theta_reading);
-        ExInput = findViewById(R.id.editText_Ex);
+        ExInput = findViewById(R.id.editText_Tmin);
 
         plot = findViewById(R.id.plot);
         plot2 = findViewById(R.id.plot2);
@@ -256,7 +255,12 @@ public class TransferActivity extends AppCompatActivity {
 
                     TLab = Double.parseDouble(TLabInput.getText().toString());
                     Ex = Double.parseDouble(ExInput.getText().toString());
-                    m2.SetEx(Ex);
+
+                    if( m1.mass > m2.mass) {
+                        m1.SetEx(Ex);
+                    }else{
+                        m2.SetEx(Ex);
+                    }
 
                     // calculate 4-vector;
 
@@ -424,7 +428,7 @@ public class TransferActivity extends AppCompatActivity {
 
     private void SetInfo(double beta, double k){
         double TlabMin = (Math.pow(m1.mass+m2.mass,2) - Math.pow(ma.mass+mb.mass,2))/2./ma.A/mb.mass;
-        infoView.setText(String.format("%s :  %5.2f [A MeV], %s : %6.4f, k : %5.2f[MeV/c]",
+        infoView.setText(String.format("%7s :  %5.2f [A MeV], %3s : %6.4f,  k : %5.2f[MeV/c]",
                 Html.fromHtml("T<sub><small>Lab<small></sub>"),
                 TlabMin,
                 Html.fromHtml("\u03b2"),

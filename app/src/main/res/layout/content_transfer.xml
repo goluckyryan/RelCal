@@ -131,7 +131,7 @@
         android:layout_marginTop="100dp"
         android:ems="10"
         android:inputType="numberDecimal"
-        android:nextFocusDown="@+id/editText_Ex"
+        android:nextFocusDown="@+id/editText_Tmin"
         android:selectAllOnFocus="true"
         android:textAlignment="center"
         app:layout_constraintStart_toEndOf="@+id/textView_TLab"
@@ -231,15 +231,16 @@
 
     <TextView
         android:id="@+id/textView_Ex"
-        android:layout_width="42dp"
+        android:layout_width="100dp"
         android:layout_height="30dp"
         android:text="@string/Ex_label"
+        android:textAlignment="textEnd"
         android:textSize="18sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/editText_TLab"
-        app:layout_constraintEnd_toStartOf="@+id/editText_Ex" />
+        app:layout_constraintEnd_toStartOf="@+id/editText_Tmin" />
 
     <EditText
-        android:id="@+id/editText_Ex"
+        android:id="@+id/editText_Tmin"
         android:layout_width="86dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -327,9 +328,9 @@
         android:layout_width="0dp"
         android:layout_height="30dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:textAlignment="center"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:textAlignment="textStart"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/editText_TLab"
         app:layout_constraintEnd_toEndOf="parent"
