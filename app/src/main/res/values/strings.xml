@@ -18,6 +18,7 @@
     <string name="Sn_label">Sn [MeV]</string>
     <string name="momt_label">momt [MeV c<sup><small>-1</small></sup>]</string>
     <string name="TLab_label">T<sub><small>Lab</small></sub> [A.MeV]</string>
+    <string name="Bfield_label">B-field [T]</string>
     <string name="TMin_label">min(T<sub><small>Lab</small></sub>)</string>
     <string name="thetaCM_label">\u03B8<sub><small>CM</small></sub> [deg]</string>
     <string name="beam_label">P<sub><small>beam</small></sub></string>

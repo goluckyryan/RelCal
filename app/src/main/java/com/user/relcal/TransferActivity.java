@@ -429,7 +429,7 @@ public class TransferActivity extends AppCompatActivity {
     private void SetInfo(double beta, double k){
         double TlabMin = (Math.pow(m1.mass+m2.mass,2) - Math.pow(ma.mass+mb.mass,2))/2./ma.A/mb.mass;
         infoView.setText(String.format("%7s :  %5.2f [A MeV], %3s : %6.4f,  k : %5.2f[MeV/c]",
-                Html.fromHtml("T<sub><small>Lab<small></sub>"),
+                Html.fromHtml("min(T<sub><small>Lab<small></sub>)"),
                 TlabMin,
                 Html.fromHtml("\u03b2"),
                 beta,

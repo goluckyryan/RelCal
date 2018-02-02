@@ -109,7 +109,7 @@
         android:layout_marginTop="60dp"
         android:ems="10"
         android:inputType="numberDecimal"
-        android:nextFocusDown="@+id/editText_Tmin"
+        android:nextFocusDown="@+id/editText_Bfield"
         android:selectAllOnFocus="true"
         android:textAlignment="center"
         app:layout_constraintStart_toEndOf="@+id/textView_TLab"
@@ -155,7 +155,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="180dp"
+        android:layout_marginTop="220dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -209,17 +209,54 @@
     </ScrollView>
 
     <TextView
+        android:id="@+id/textView_Bfield"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/Bfield_label"
+        android:textAlignment="textEnd"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/textView_thetaCM"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_TLab" />
+
+    <EditText
+        android:id="@+id/editTex_Bfield"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:inputType="numberDecimal"
+        android:text="2.0"
+        android:textAlignment="center"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView_Bfield"
+        app:layout_constraintStart_toEndOf="@+id/textView_Bfield" />
+
+    <TextView
+        android:id="@+id/textView_slope"
+        android:layout_width="150dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="24dp"
+        android:text="slope : "
+        android:textAlignment="textStart"
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/editTex_Bfield"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/editTex_Bfield" />
+
+    <TextView
         android:id="@+id/textView_Ex"
         android:layout_width="0dp"
         android:layout_height="30dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:text="@string/Ex_label"
-        android:textAlignment="center"
+        android:textAlignment="textEnd"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/textView_thetaCM"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_TLab" />
+        app:layout_constraintTop_toBottomOf="@+id/textView_Bfield" />
 
     <SeekBar
         android:id="@+id/seekBar_Ex"

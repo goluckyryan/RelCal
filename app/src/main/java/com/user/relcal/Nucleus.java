@@ -18,6 +18,8 @@ public class Nucleus extends AppCompatActivity {
     public double mass, massError, BEA, Sp, Sn;
     public String Sym, Name;
 
+    private double mass0;
+
     AssetManager assetManager;
 
     public Nucleus(AssetManager asset){
@@ -29,6 +31,7 @@ public class Nucleus extends AppCompatActivity {
         this.Sn = 0;
         this.Sym = "H";
         this.mass = 938.272046;
+        this.mass0= this.mass;
         this.massError = 0; // keV
         this.Name = "1H";
     }
@@ -38,6 +41,7 @@ public class Nucleus extends AppCompatActivity {
         this.A = A;
         this.Z = Z;
         FindMassByBEA(A, Z); // also located mass, massError, and Sym;
+        this.mass0 = this.mass;
         this.Sp = 0;
         this.Sn = 0;
         this.Name =  "" + A + this.Sym;
@@ -83,6 +87,8 @@ public class Nucleus extends AppCompatActivity {
             FindMassByName(name);
             this.Name = "" + A + this.Sym;
         }
+
+        this.mass0 = this.mass;
     }
 
     public void CalSp(){
@@ -215,7 +221,7 @@ public class Nucleus extends AppCompatActivity {
     }
 
     public void SetEx(double Ex){
-        mass = mass + Ex;
+        mass = mass0 + Ex;
     }
 
     private double FindMassByBEA(int a,int z){
