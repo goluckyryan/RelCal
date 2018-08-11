@@ -6,12 +6,6 @@
     android:layout_height="match_parent"
     tools:context="com.user.relcal.MainActivity">
 
-    <LinearLayout
-        android:layout_width="0px"
-        android:layout_height="0px"
-        android:focusable="true"
-        android:focusableInTouchMode="true" />
-
     <EditText
         android:id="@+id/editText_Pa"
         android:layout_width="60dp"
@@ -134,6 +128,7 @@
         android:nextFocusDown="@+id/editText_Tmin"
         android:selectAllOnFocus="true"
         android:textAlignment="center"
+        android:nextFocusForward="@id/seekBar"
         app:layout_constraintStart_toEndOf="@+id/textView_TLab"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -249,6 +244,7 @@
         android:nextFocusDown="@+id/editText_Pa"
         android:text="0"
         android:textAlignment="center"
+        android:nextFocusForward="@id/editText_TLab"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView_Ex"
         app:layout_constraintEnd_toEndOf="parent" />
 

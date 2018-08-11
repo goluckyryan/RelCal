@@ -34,7 +34,7 @@ import static java.lang.Math.sqrt;
 public class TransferActivity extends AppCompatActivity {
 
     Nucleus ma, mb, m1, m2; //reaction a(b,1)2
-    Double TLab, Ex;
+    Double TLab, TLabMin, Ex;
     int thetaCM;
     double[] Pa = new double[3]; // (E, x, y);
     double[] Pb = new double[3];
@@ -75,6 +75,8 @@ public class TransferActivity extends AppCompatActivity {
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle("Transfer Reaction");
 
+        //Reaction notate as a(b,1),2
+
         assetManager = getAssets();
         ma = new Nucleus(12, 6, assetManager);
         mb = new Nucleus(2, 1 ,assetManager);
@@ -90,7 +92,8 @@ public class TransferActivity extends AppCompatActivity {
         P2Name = findViewById(R.id.textView_P2);
 
         infoView = findViewById(R.id.textView_info);
-        SetInfo(betaInc, k_cm);
+        TLabMin = (Math.pow(m1.mass+m2.mass,2) - Math.pow(ma.mass+mb.mass,2))/2./ma.A/mb.mass;
+        SetInfo(TLabMin, betaInc, k_cm);
 
         Pavec = findViewById(R.id.textView_4vPa);
         Pbvec = findViewById(R.id.textView_4vPb);
@@ -132,7 +135,8 @@ public class TransferActivity extends AppCompatActivity {
                     P2vec.setText(""+m2.mass);
 
                     QValueView.setText(String.format("Q : %5.2f [MeV]",ma.mass + mb.mass - m1.mass - m2.mass));
-                    SetInfo(0,0);
+
+                    SetInfo(TLabMin,0,0);
                 }
             }
         });
@@ -151,7 +155,7 @@ public class TransferActivity extends AppCompatActivity {
                     P2vec.setText(""+m2.mass);
 
                     QValueView.setText(String.format("Q : %5.2f [MeV]",ma.mass + mb.mass - m1.mass - m2.mass));
-                    SetInfo(0,0);
+                    SetInfo(TLabMin,0,0);
 
                     return true;
                 }
@@ -172,7 +176,7 @@ public class TransferActivity extends AppCompatActivity {
                     P2vec.setText(""+m2.mass);
 
                     QValueView.setText(String.format("Q : %5.2f [MeV]",ma.mass + mb.mass - m1.mass - m2.mass));
-                    SetInfo(0,0);
+                    SetInfo(TLabMin,0,0);
                 }
             }
         });
@@ -191,7 +195,7 @@ public class TransferActivity extends AppCompatActivity {
                     P2vec.setText(""+m2.mass);
 
                     QValueView.setText(String.format("Q : %5.2f [MeV]",ma.mass + mb.mass - m1.mass - m2.mass));
-                    SetInfo(0,0);
+                    SetInfo(TLabMin,0,0);
                     return true;
                 }
                 return false;
@@ -211,7 +215,7 @@ public class TransferActivity extends AppCompatActivity {
                     P2vec.setText(""+m2.mass);
 
                     QValueView.setText(String.format("Q : %5.2f [MeV]",ma.mass + mb.mass - m1.mass - m2.mass));
-                    SetInfo(0,0);
+                    SetInfo(TLabMin,0,0);
                 }
             }
         });
@@ -230,8 +234,44 @@ public class TransferActivity extends AppCompatActivity {
                     P2vec.setText(""+m2.mass);
 
                     QValueView.setText(String.format("Q : %5.2f [MeV]",ma.mass + mb.mass - m1.mass - m2.mass));
-                    SetInfo(0,0);
+                    SetInfo(TLabMin,0,0);
                     return true;
+                }
+                return false;
+            }
+        });
+
+
+        ExInput.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) && i == KeyEvent.KEYCODE_ENTER) {
+
+                    InputMethodManager inputManager = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+
+                    //ma = new Nucleus(PaName.getText().toString(), assetManager);
+                    //mb = new Nucleus(PbName.getText().toString(), assetManager);
+                    //m1 = new Nucleus(P1Name.getText().toString(), assetManager);
+                    //m2 = new Nucleus( mb.A + ma.A - m1.A, mb.Z + ma.Z - m1.Z, assetManager );
+                    //P2Name.setText(m2.Name);
+
+                    Ex = Double.parseDouble(ExInput.getText().toString());
+
+                    QValueView.setText(String.format("Q : %5.2f [MeV]", ma.mass + mb.mass - m1.mass - m2.mass - Ex));
+
+                    if( m1.mass > m2.mass) {
+                        m1.SetEx(Ex);
+                    }else{
+                        m2.SetEx(Ex);
+                    }
+
+                    TLabMin = (Math.pow(m1.mass+m2.mass,2) - Math.pow(ma.mass+mb.mass,2))/2./ma.A/mb.mass;
+
+                    infoView.setText(String.format("%7s :  %5.2f [A MeV]",
+                            Html.fromHtml("min(T<sub><small>Lab<small></sub>)"),
+                            TLabMin));
+
                 }
                 return false;
             }
@@ -240,6 +280,7 @@ public class TransferActivity extends AppCompatActivity {
         TLabInput.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
+
                 if( (keyEvent.getAction() == KeyEvent.ACTION_DOWN) && i == KeyEvent.KEYCODE_ENTER){
 
                     InputMethodManager inputManager = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -251,10 +292,11 @@ public class TransferActivity extends AppCompatActivity {
                     m2 = new Nucleus( mb.A + ma.A - m1.A, mb.Z + ma.Z - m1.Z, assetManager );
                     P2Name.setText(m2.Name);
 
-                    QValueView.setText(String.format("Q : %5.2f [MeV]",ma.mass + mb.mass - m1.mass - m2.mass));
 
                     TLab = Double.parseDouble(TLabInput.getText().toString());
                     Ex = Double.parseDouble(ExInput.getText().toString());
+
+                    QValueView.setText(String.format("Q : %5.2f [MeV]", ma.mass + mb.mass - m1.mass - m2.mass - Ex));
 
                     if( m1.mass > m2.mass) {
                         m1.SetEx(Ex);
@@ -262,8 +304,16 @@ public class TransferActivity extends AppCompatActivity {
                         m2.SetEx(Ex);
                     }
 
-                    // calculate 4-vector;
+                    TLabMin = (Math.pow(m1.mass+m2.mass,2) - Math.pow(ma.mass+mb.mass,2))/2./ma.A/mb.mass;
 
+                    if( TLabMin > TLab ) {
+                        infoView.setText(String.format("%7s :  %5.2f [A MeV]",
+                                Html.fromHtml("min(T<sub><small>Lab<small></sub>)"),
+                                TLabMin));
+                        return false;
+                    }
+
+                    // calculate 4-vector;
                     Pa[0] = ma.mass + TLab * ma.A;
                     Pa[1] = ma.CalMomentum( TLab * ma.A);
                     Pa[2] = 0;
@@ -298,16 +348,16 @@ public class TransferActivity extends AppCompatActivity {
                     TransferReaction(0);
                     double beta = GetMomentum(Pa) / Pa[0];
                     double gamma = 1/sqrt(1-beta*beta);
-                    SetInfo(betaInc,k_cm);
+                    SetInfo(TLabMin, betaInc,k_cm);
 
-                    for( int j = 0 ; j < 360; j++){
+                    for( int j = 0 ; j < 180; j++){
                         TransferReaction(j);
 
                         xvals1.add(GetKE(P1));
-                        yvals1.add(GetThetaLab(P1));
+                        yvals1.add(Math.abs(GetThetaLab(P1)));
 
                         xvals2.add(GetKE(P2));
-                        yvals2.add(GetThetaLab(P2));
+                        yvals2.add(Math.abs(GetThetaLab(P2)));
 
                         // momentum transfer to P1
                         xvals3.add(GetThetaLab(P1));
@@ -384,7 +434,7 @@ public class TransferActivity extends AppCompatActivity {
 
                     //Find y range
                     plot.setDomainBoundaries(minX, maxX, BoundaryMode.FIXED);
-                    plot.setRangeBoundaries(-maxY, maxY, BoundaryMode.FIXED);
+                    plot.setRangeBoundaries(0, maxY, BoundaryMode.FIXED);
                     plot.redraw();
 
                     plot2.setDomainBoundaries(0, maxY, BoundaryMode.FIXED);
@@ -426,11 +476,10 @@ public class TransferActivity extends AppCompatActivity {
 
     }
 
-    private void SetInfo(double beta, double k){
-        double TlabMin = (Math.pow(m1.mass+m2.mass,2) - Math.pow(ma.mass+mb.mass,2))/2./ma.A/mb.mass;
+    private void SetInfo(double TLabMin, double beta, double k){
         infoView.setText(String.format("%7s :  %5.2f [A MeV], %3s : %6.4f,  k : %5.2f[MeV/c]",
                 Html.fromHtml("min(T<sub><small>Lab<small></sub>)"),
-                TlabMin,
+                TLabMin,
                 Html.fromHtml("\u03b2"),
                 beta,
                 k));

@@ -25,6 +25,9 @@
         <activity
             android:name=".HELIOS"
             android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".KnockoutActivity"
+            android:parentActivityName=".MainActivity"/>
     </application>
 
 </manifest>
